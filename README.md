@@ -2,6 +2,19 @@
 
 **Full-stack AI system for brain tumor detection from MRI scans with uncertainty quantification and explainable predictions.**
 
+## 🔧 Tech Stack & Requirements
+
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-red)
+![TorchVision](https://img.shields.io/badge/TorchVision-0.17+-orange)
+![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green)
+![Flask](https://img.shields.io/badge/Flask-3.0+-lightgrey)
+![NumPy](https://img.shields.io/badge/NumPy-1.24+-blue)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-brightgreen)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7+-yellow)
+![Scikit-learn](https://img.shields.io/badge/ScikitLearn-1.3+-orange)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ---
 
 ## ✨ Features
