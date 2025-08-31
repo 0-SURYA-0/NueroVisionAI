@@ -1,174 +1,220 @@
-# 🧠 NeuroVision AI
+# 🧠 NueroVision AI
 
-**Multi-Scale Self-Attention MRI Fusion for Brain Tumor Detection**
-*Towards Trustworthy AI for Clinical Diagnosis*
-
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-red)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-green)
-![React](https://img.shields.io/badge/Frontend-React%2BTS-blue)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![MRI](https://img.shields.io/badge/MRI-T1%7CT2%7CFLAIR-purple)
+**Full-stack AI system for brain tumor detection from MRI scans with uncertainty quantification and explainable predictions.**
 
 ---
 
-## 📜 Overview
+## ✨ Features
 
-**NeuroVision AI** is a full-stack AI system for **brain tumor detection** from MRI scans.
-
-It combines:
-
-* **Backend (FastAPI + PyTorch)** → AI inference, uncertainty quantification, explainability (Grad-CAM++)
-* **Frontend (React + Tailwind + Vite)** → Interactive dashboard for clinicians to upload scans, view predictions, uncertainty, and explanations
-
-Unlike existing CNN-only solutions, NeuroVision AI integrates:
-
-* **Multi-Scale Self-Attention** for feature fusion
-* **Bayesian Convolutions** for uncertainty-aware predictions
-* **Grad-CAM++** for clinician trust
-
-**Key domains:**
-
-* 🏥 Medical Imaging
-* 🧠 Brain Tumor Detection
-* 🔬 Explainable AI in Healthcare
-* ✅ Clinical Decision Support
+- 🩻 **Multi-modal MRI fusion** (T1, T2, FLAIR) with normalization & augmentation  
+- 🧩 **ResNet34 + Multi-Scale Self-Attention** for robust tumor feature extraction  
+- 🎲 **Bayesian Convolutions + Monte Carlo Dropout** → Epistemic uncertainty  
+- ⚖️ **Aleatoric head** → Data uncertainty  
+- 🔥 **Focal Loss + KL Divergence regularization** with AdamW optimizer & Cosine Annealing  
+- 🖼️ **Grad-CAM++ visualizations** for explainable predictions  
+- ⚡ **FastAPI backend + React (Tailwind) frontend** for deployment  
 
 ---
 
-## ⚙️ Features
-
-* 📥 Multi-modal MRI ingestion (T1, T2, FLAIR)
-* ✂️ Preprocessing + Augmentation for robustness
-* 🔍 Multi-Scale Self-Attention Fusion
-* 🤖 Bayesian CNNs with Monte Carlo Dropout
-* 🧠 Uncertainty quantification (epistemic + aleatoric)
-* 🔎 Explainability via Grad-CAM++
-* 💻 Full-stack deployment (FastAPI backend + React frontend)
-
----
-
-## 🏗 Architecture
-
-```mermaid
-flowchart TD
-    A[MRI Inputs<br/>T1, T2, FLAIR] --> B[Preprocessing<br/>Normalization + Augmentation]
-    B --> C[ResNet34 Backbone<br/>Bayesian Convs]
-    C --> D[Multi-Scale Self-Attention Fusion]
-    D --> E[Uncertainty Estimation<br/>Epistemic + Aleatoric]
-    E --> F[Classifier<br/>Tumor Probability]
-    F --> G[FastAPI Backend<br/>Prediction APIs]
-    G --> H[React Frontend<br/>Interactive Dashboard]
-    H --> I[Outputs<br/>Probabilities + Confidence + Heatmaps]
-```
-
----
-
-## 🖥 Tech Stack
-
-* **Backend**: Python 3.10, FastAPI, PyTorch, ONNX Runtime, PostgreSQL (for history)
-* **Frontend**: React, TypeScript, Vite, TailwindCSS
-* **Model Backbone**: ResNet34 + Bayesian Convs + Multi-Scale Attention
-* **Loss & Optimization**: Focal Loss + KL Div, AdamW, Cosine Annealing
-* **Explainability**: Grad-CAM++
-
----
-
-## 📂 Project Structure
+## 🏗️ Folder Structure
 
 ```
-.
-├── backend/
-│   ├── main.py           # FastAPI entrypoint
-│   ├── routes/           # API routes (auth, predict, history)
-│   ├── models/           # Pretrained tumor detection models (ONNX, pkl)
-│   ├── services/         # Database & business logic
-│   ├── database.py       # DB config
-│   ├── schemas.py        # Pydantic schemas
-│   ├── requirements.txt  # Backend dependencies
+NUEROVISION AI/
+│── backend/                 # FastAPI backend (inference + APIs)
+│   ├── main.py              # Entry point for FastAPI app
+│   ├── routers/             # API routes
+│   ├── models/              # Pydantic schemas, DB models
+│   ├── services/            # Business logic, model serving
+│   ├── utils/               # Helper functions
+│   └── requirements.txt     # Backend dependencies
 │
-├── frontend/
-│   ├── index.html        # Entry point
-│   ├── src/              # React + TS components
-│   ├── tailwind.config.ts
-│   ├── vite.config.ts
-│   ├── package.json      # Frontend dependencies
+│── core/                    # Core ML pipeline
+│   ├── __init__.py
+│   ├── inference.py         # Model inference script
+│   ├── model.py             # ResNet34 + Bayesian + Attention model
+│   ├── train.py             # Training loop with Focal Loss + KL
+│   ├── utils.py             # Preprocessing, metrics, helpers
+│   └── requirements.txt     # Core ML dependencies
 │
-├── notebooks/            # Jupyter notebooks (preprocessing → evaluation)
-├── results/              # Checkpoints, metrics, visualizations
-├── LICENSE
-└── README.md
+│── data/                    # MRI dataset (not pushed to repo)
+│   ├── raw/                 # Raw MRI scans
+│   ├── processed/           # Normalized & augmented data
+│   └── splits/              # Train/Val/Test splits
+│
+│── frontend/                # React + Tailwind + Vite frontend
+│   ├── src/
+│   │   ├── components/      # UI components (UploadForm, Charts)
+│   │   ├── pages/           # Dashboard, Results, About
+│   │   ├── services/        # API calls to backend
+│   │   └── assets/          # Logos, static files
+│   ├── public/              # Public static files
+│   └── package.json         # Frontend dependencies
+│
+│── notebooks/               # Jupyter notebooks (pipeline steps)
+│   ├── 01_preprocessing.ipynb     # Data preprocessing
+│   ├── 02_model_building.ipynb    # Model design & setup
+│   ├── 03_training.ipynb          # Training experiments
+│   ├── 04_evaluation.ipynb        # Model evaluation
+│   ├── 05_visualizations.ipynb    # Results & Grad-CAM++ visualizations
+│   └── 06_inference_demo.ipynb    # Demo inference with test scans
+│
+│── results/                 # Model outputs
+│   ├── predictions/         # Prediction results
+│   ├── heatmaps/            # Grad-CAM++ visualizations
+│   └── metrics.json         # Accuracy, Loss, Uncertainty
+│
+│── .gitignore
+│── LICENSE
+│── requirements.txt         # Root-level dependencies
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🛠️ Tech Stack
 
-### 🔹 1. Clone Repository
+- **Machine Learning**: PyTorch, ResNet34, Bayesian CNN, Self-Attention  
+- **Uncertainty Estimation**: Monte Carlo Dropout, Aleatoric Head  
+- **Explainability**: Grad-CAM++  
+- **Backend**: FastAPI  
+- **Frontend**: React + Tailwind CSS + Vite  
+- **Deployment**: REST API + Web UI  
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/0-SURYA-0/NueroVision-AI.git
 cd NueroVision-AI
 ```
 
-### 🔹 2. Backend Setup
+### 2️⃣ Backend Setup (FastAPI)
 
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
-
 pip install -r requirements.txt
-
-# Run FastAPI server
-uvicorn main:app --reload --port 8000
+uvicorn main:app --reload
 ```
 
-### 🔹 3. Frontend Setup
+The inference API will be available at **http://localhost:8000**
+
+### 3️⃣ Frontend Setup (React + Tailwind)
 
 ```bash
 cd frontend
 npm install
-npm run dev   # Runs React app at http://localhost:5173
+npm run dev
 ```
 
-### 🔹 4. Usage
+The frontend will be available at **http://localhost:5173**
 
-* Open frontend in browser → Upload MRI scan → Backend processes → Dashboard shows:
+### 4️⃣ Model Training (Optional)
 
-  * ✅ Tumor probability
-  * 📊 Epistemic & Aleatoric uncertainty
-  * 🔎 Grad-CAM++ heatmap
-
----
-
-## 📈 Results
-
-* **High ROC-AUC** on multi-modal MRI datasets
-* **Confidence-aware predictions** for safe clinical adoption
-* **Explainability** with Grad-CAM++ heatmaps
----
-
-## 🔮 Future Enhancements
-
-* Multi-class tumor classification (glioma, meningioma, pituitary)
-* Integration with **MONAI** for medical imaging
-* Deployment with Docker + Kubernetes
-* Secure clinician dashboard with authentication
+```bash
+cd core
+pip install -r requirements.txt
+python train.py
+```
 
 ---
 
-## 📜 License
+## 🚀 Usage
 
-This project is licensed under the **MIT License** – see [LICENSE](LICENSE).
+1. **Open the Frontend UI** at http://localhost:5173
+2. **Upload an MRI scan** (T1/T2/FLAIR format)
+3. **Get Results**:
+   - ✅ Tumor probability score
+   - 📉 Epistemic + Aleatoric uncertainty estimates
+   - 🔥 Grad-CAM++ heatmap visualization
+
+### API Endpoints
+
+- `POST /predict` - Upload MRI scan for tumor detection
+- `GET /health` - Health check endpoint
+- `GET /docs` - Interactive API documentation
+
+---
+
+## 📊 Results
+
+- **Accuracy**: (To be updated after training completion)
+- **Uncertainty Calibration**: Reliable epistemic & aleatoric uncertainty estimates
+- **Explainability**: Grad-CAM++ highlights tumor regions for medical interpretability
+- **Performance**: Real-time inference with uncertainty quantification
+
+---
+
+## 🔬 Model Architecture
+
+The system combines several advanced techniques:
+
+- **Backbone**: ResNet34 with pre-trained weights
+- **Attention Mechanism**: Multi-scale self-attention for feature refinement
+- **Uncertainty Quantification**: 
+  - Bayesian convolutions for epistemic uncertainty
+  - Aleatoric head for data uncertainty
+  - Monte Carlo dropout during inference
+- **Loss Function**: Focal Loss + KL Divergence regularization
+- **Optimization**: AdamW with Cosine Annealing scheduler
+
+---
+
+## 📁 Key Files
+
+- `core/model.py` - Complete model architecture
+- `core/train.py` - Training pipeline with uncertainty estimation
+- `core/inference.py` - Inference script with Grad-CAM++
+- `backend/main.py` - FastAPI application entry point
+- `frontend/src/` - React frontend components
+
+---
+
+## 📈 Development Roadmap
+
+- [ ] Deploy on cloud platform (Docker + AWS/GCP)
+- [ ] Add support for additional MRI modalities (Diffusion, Perfusion)
+- [ ] Implement clinical-grade user interface
+- [ ] Add model performance benchmarking
+- [ ] Integration with medical imaging standards (DICOM)
 
 ---
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a new branch (`feature/xyz`)
-3. Commit changes (`git commit -m 'Add xyz feature'`)
-4. Push (`git push origin feature/xyz`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgements
+
+- [BRATS Dataset](https://www.med.upenn.edu/sbia/brats2018.html) for brain tumor MRI scans
+- [PyTorch](https://pytorch.org/) for the deep learning framework
+- [Grad-CAM++](https://arxiv.org/abs/1710.11063) for explainable AI visualizations
+- [FastAPI](https://fastapi.tiangolo.com/) for the backend framework
+- [React](https://reactjs.org/) and [Tailwind CSS](https://tailwindcss.com/) for the frontend
+
+---
+
+## 📞 Contact
+
+**Surya** - [GitHub Profile](https://github.com/0-SURYA-0)
+
+Project Link: [https://github.com/0-SURYA-0/NueroVision-AI](https://github.com/0-SURYA-0/NueroVision-AI)
+
+---
+
+<div align="center">
+  <strong>⭐ Star this repo if you found it helpful!</strong>
+</div>
