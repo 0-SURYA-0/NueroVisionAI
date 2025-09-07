@@ -220,7 +220,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Contact
+## Profile/Repo!
 
 **Surya** - [GitHub Profile](https://github.com/0-SURYA-0)
 
